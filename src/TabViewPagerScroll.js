@@ -80,9 +80,11 @@ export default class TabViewPagerScroll extends PureComponent<void, Props, void>
   };
 
   _handleBeginDrag = () => {
-    // onScrollBeginDrag fires when user touches the ScrollView
     this._isManualScroll = true;
     this._isMomentumScroll = false;
+    if(this.props.onDragStart){
+      this.props.onDragStart()
+    }
   };
 
   _handleEndDrag = () => {

@@ -61,7 +61,9 @@ export default class TabViewAnimated extends PureComponent<DefaultProps, Props, 
   };
 
   static defaultProps = {
-    renderPager: (props: SceneRendererProps) => <TabViewPager {...props} />,
+    renderPager: (props: SceneRendererProps) => {
+      return <TabViewPager {...props}  />
+    }
   };
 
   constructor(props: Props) {

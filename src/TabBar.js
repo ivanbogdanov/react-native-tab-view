@@ -367,15 +367,19 @@ export default class TabBar extends PureComponent<DefaultProps, Props, State> {
       extrapolate: 'clamp',
     });
 
+
     return (
-      <Animated.View style={[ styles.tabBar, this.props.style ]}>
+      <Animated.View style={[ styles.tabBar, this.props.style ]} pointerEvents='none'>
+
+        <Animated.View style={[this.props.bgStyle]}></Animated.View>
+
         <Animated.View pointerEvents='none' style={[ styles.indicatorContainer, scrollEnabled ? { width: tabBarWidth, transform: [ { translateX } ] } : null ]}>
           {this._renderIndicator({
             ...this.props,
             width: new Animated.Value(finalTabWidth),
           })}
         </Animated.View>
-        <View style={styles.scroll}>
+        <View style={styles.scroll} pointerEvents='none'>
           <ScrollView
             horizontal
             scrollEnabled={scrollEnabled}
@@ -393,6 +397,7 @@ export default class TabBar extends PureComponent<DefaultProps, Props, State> {
             onMomentumScrollEnd={this._handleMomentumScrollEnd}
             contentOffset={{ x: initialOffset, y: 0 }}
             ref={this._setRef}
+             pointerEvents='none'
           >
             {routes.map((route, i) => {
               const focused = index === i;
@@ -435,7 +440,6 @@ export default class TabBar extends PureComponent<DefaultProps, Props, State> {
               } else if (!isWidthSet) {
                 tabContainerStyle.flex = 1;
               }
-
               return (
                 <TouchableItem
                   borderless

@@ -37,6 +37,7 @@ export default class TabViewTransitioner extends PureComponent<DefaultProps, Pro
     render: PropTypes.func.isRequired,
     configureTransition: PropTypes.func.isRequired,
     onRequestChangeTab: PropTypes.func.isRequired,
+    onBeforeChangeTab: PropTypes.func.isRequired,
     onChangePosition: PropTypes.func,
     initialLayout: PropTypes.shape({
       height: PropTypes.number.isRequired,
@@ -131,7 +132,14 @@ export default class TabViewTransitioner extends PureComponent<DefaultProps, Pro
       jumpToIndex: this._jumpToIndex,
       getLastPosition: this._getLastPosition,
       subscribe: this._addSubscription,
+      onDragStart: this._onDragStart
     };
+  }
+
+  _onDragStart = () => {
+    if(this.props.onDragStart){
+      this.props.onDragStart()
+    }
   }
 
   _transitionTo = (toValue: number, callback: ?Function) => {
@@ -178,6 +186,11 @@ export default class TabViewTransitioner extends PureComponent<DefaultProps, Pro
 
     this._triggerEvent('jump', index);
     this._nextIndex = index;
+
+    if(this.props.onBeforeChangeTab){
+      this.props.onBeforeChangeTab(index);
+    }
+
     this._transitionTo(index, () =>
       global.requestAnimationFrame(() => {
         if (this.props.navigationState.index === index) {

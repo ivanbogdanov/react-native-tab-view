@@ -54,6 +54,7 @@ export default class TouchableItem extends PureComponent<DefaultProps, Props, vo
     } else {
       return (
         <TouchableOpacity
+           pointerEvents='none'
           {...rest}
           style={style}
           activeOpacity={pressOpacity}
