@@ -96,6 +96,9 @@ export default class TabViewPagerAndroid extends PureComponent<void, Props, void
   _handlePageScrollStateChanged = (e: PageScrollState) => {
     this._isIdle = e === 'idle';
     if (e === 'dragging') {
+      if(this.props.onDragStart){
+        this.props.onDragStart()
+      }
       this._isDrag = true;
     } else if (e === 'idle') {
       this._isDrag = false;
