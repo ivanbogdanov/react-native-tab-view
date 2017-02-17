@@ -61,8 +61,8 @@ export default class TabViewAnimated extends PureComponent<DefaultProps, Props, 
   };
 
   static defaultProps = {
-    renderPager: (props: SceneRendererProps) => {
-      return <TabViewPager {...props}  />
+    renderPager: (props: SceneRendererProps, cmp) => {
+      return <TabViewPager ref={el => (cmp._pager = el)} {...props}  />
     }
   };
 
@@ -75,6 +75,8 @@ export default class TabViewAnimated extends PureComponent<DefaultProps, Props, 
   }
 
   state: State;
+
+  _pager: Object;
 
   _renderScene = (props: SceneRendererProps & Scene) => {
     const { renderScene, navigationState, lazy } = this.props;
@@ -117,7 +119,7 @@ export default class TabViewAnimated extends PureComponent<DefaultProps, Props, 
               })}
             </View>
           ),
-        })}
+        },this)}
         {renderFooter && renderFooter(props)}
       </View>
     );
@@ -142,6 +144,10 @@ export default class TabViewAnimated extends PureComponent<DefaultProps, Props, 
       });
     }
   };
+
+  getPager() {
+    return this._pager
+  }
 
   render() {
     return (
